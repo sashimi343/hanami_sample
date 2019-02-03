@@ -1,0 +1,5 @@
+require_relative '../../spec_helper.rb'
+
+RSpec.describe CLASS_NAME do
+  # your code goes here
+end

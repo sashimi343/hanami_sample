@@ -1,0 +1,13 @@
+require_relative '../base_interactor.rb'
+
+module MODULE_NAME
+  class CLASS_NAME < ::BaseInteractor
+    def initialize(params = {})
+      super(params)
+    end
+
+    def call()
+      # your code goes here
+    end
+  end
+end
