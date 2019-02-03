@@ -1,9 +1,12 @@
 require 'hanami/interactor'
+require 'hanami/validations'
 
-class BaseInteractor
+class HanamiSample::BaseInteractor
   include Hanami::Interactor
 
-  @@validators = []
+  class Validation
+    include Hanami::Validations
+  end
 
   def initialize(params = {})
     @params = params
@@ -15,22 +18,16 @@ class BaseInteractor
 
   private
 
-  def self.validator(validator)
-    @@validators << validator
+  def self.validator(&block)
+    Validation.class_eval do
+      validations block
+    end
   end
 
   def valid?()
-    validation_success = true
+    validation_result = Validation.new(@params).validate
+    error(validation_result.messages) if validation_result.failure?
 
-    @@validators.each do |validator|
-      validation_result = validator.new(@params).validate
-
-      if validation_result.failure?
-        validation_success = false
-        error(validation_result.message)
-      end
-    end
-
-    validation_success
+    validation_result.success?
   end
 end

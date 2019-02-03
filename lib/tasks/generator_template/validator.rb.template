@@ -1,5 +1,0 @@
-require './base_validator.rb'
-
-class CLASS_NAME < BaseValidator
-  # your code goes here
-end
