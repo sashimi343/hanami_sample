@@ -1,7 +1,10 @@
-require_relative '../validatable_interactor.rb'
+require_relative '../base_interactor.rb'
+require_relative '../validatable.rb'
 
 module MODULE_NAME
-  class CLASS_NAME < HanamiSample::ValidatableInteractor
+  class CLASS_NAME < HanamiSample::BaseInteractor
+    include HanamiSample::Validatable
+
     Validation.class_eval do
       validations do
         # your validation code goes here

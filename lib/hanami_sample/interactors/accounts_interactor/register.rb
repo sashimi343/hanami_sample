@@ -1,7 +1,10 @@
-require_relative '../validatable_interactor.rb'
+require_relative '../base_interactor.rb'
+require_relative '../validatable.rb'
 
 module AccountsInteractor
-  class Register < HanamiSample::ValidatableInteractor
+  class Register < HanamiSample::BaseInteractor
+    include HanamiSample::Validatable
+
     Validation.class_eval do
       validations do
         required(:name) { filled? }

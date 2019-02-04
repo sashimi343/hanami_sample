@@ -1,7 +1,6 @@
 require 'hanami/validations'
-require_relative './base_interactor.rb'
 
-class HanamiSample::ValidatableInteractor < HanamiSample::BaseInteractor
+module HanamiSample::Validatable
   class Validation
     include Hanami::Validations
   end
