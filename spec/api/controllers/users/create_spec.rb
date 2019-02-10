@@ -1,4 +1,9 @@
 RSpec.describe Api::Controllers::Users::Create, type: :action do
+  before do
+    AccountRepository.new.clear
+    UserRepository.new.clear
+  end
+
   let(:action) { described_class.new }
   let(:format) { "application/json" }
   let(:content_type) { "#{format}; charset=utf-8" }
@@ -13,6 +18,7 @@ RSpec.describe Api::Controllers::Users::Create, type: :action do
     end
 
     it "exposes the information about registered user" do
+      subject
       expect(action.user).to be_an_instance_of(User)
       expect(action.user.name).to eq(params[:name])
       expect(action.user.email).to eq(params[:email])
