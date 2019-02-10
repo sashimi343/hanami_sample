@@ -6,7 +6,7 @@ RSpec.describe AccountsInteractor::Register do
     account_repository.clear
   end
 
-  let(:interactor) { AccountsInteractor::Register.new(params, user_repository: user_repository, account_repository: account_repository) }
+  let(:interactor) { AccountsInteractor::Register.new(params, user_repository, account_repository) }
   let(:user_repository) { UserRepository.new }
   let(:account_repository) { AccountRepository.new }
 

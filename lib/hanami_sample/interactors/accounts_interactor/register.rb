@@ -17,7 +17,7 @@ module AccountsInteractor
       end
     end
 
-    def initialize(params = {}, user_repository: UserRepository.new, account_repository: AccountRepository.new)
+    def initialize(params = {}, user_repository = UserRepository.new, account_repository = AccountRepository.new)
       @user_repository = user_repository
       @account_repository = account_repository
 
