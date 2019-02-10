@@ -1,11 +1,14 @@
 require_relative '../../../spec_helper.rb'
 
 RSpec.describe AccountsInteractor::Register do
+  before do
+    user_repository.clear
+    account_repository.clear
+  end
+
   let(:interactor) { AccountsInteractor::Register.new(params, user_repository: user_repository, account_repository: account_repository) }
   let(:user_repository) { UserRepository.new }
   let(:account_repository) { AccountRepository.new }
-  let(:accounts) { [] }
-  let(:users) { [] }
 
   describe '#call' do
     subject { interactor.call }
@@ -18,8 +21,10 @@ RSpec.describe AccountsInteractor::Register do
         expect(subject.errors).to be_empty
       end
       it "increase the total number of registered users" do
-        expect{ subject }.to change(account_repository.all, :count).by(1)
-        expect{ subject }.to change(user_repository.all, :count).by(1)
+        expect{ subject }.to change{ user_repository.all.count }.by(1)
+      end
+      it "increase the total number of registered accounts" do
+        expect{ subject }.to change{ account_repository.all.count }.by(1)
       end
     end
 
@@ -31,8 +36,10 @@ RSpec.describe AccountsInteractor::Register do
         expect(subject.errors).to_not be_empty
       end
       it "does not increase the total number of registered users" do
-        expect{ subject }.to change(account_repository.all, :count).by(0)
-        expect{ subject }.to change(user_repository.all, :count).by(0)
+        expect{ subject }.to change{ user_repository.all.count }.by(0)
+      end
+      it "does not increase the total number of registered accounts" do
+        expect{ subject }.to change{ account_repository.all.count }.by(0)
       end
     end
 
@@ -44,8 +51,10 @@ RSpec.describe AccountsInteractor::Register do
         expect(subject.errors).to_not be_empty
       end
       it "does not increase the total number of registered users" do
-        expect{ subject }.to change(account_repository.all, :count).by(0)
-        expect{ subject }.to change(user_repository.all, :count).by(0)
+        expect{ subject }.to change{ user_repository.all.count }.by(0)
+      end
+      it "does not increase the total number of registered accounts" do
+        expect{ subject }.to change{ account_repository.all.count }.by(0)
       end
     end
 
@@ -57,8 +66,10 @@ RSpec.describe AccountsInteractor::Register do
         expect(subject.errors).to_not be_empty
       end
       it "does not increase the total number of registered users" do
-        expect{ subject }.to change(account_repository.all, :count).by(0)
-        expect{ subject }.to change(user_repository.all, :count).by(0)
+        expect{ subject }.to change{ user_repository.all.count }.by(0)
+      end
+      it "does not increase the total number of registered accounts" do
+        expect{ subject }.to change{ account_repository.all.count }.by(0)
       end
     end
 
@@ -70,8 +81,10 @@ RSpec.describe AccountsInteractor::Register do
         expect(subject.errors).to_not be_empty
       end
       it "does not increase the total number of registered users" do
-        expect{ subject }.to change(account_repository.all, :count).by(0)
-        expect{ subject }.to change(user_repository.all, :count).by(0)
+        expect{ subject }.to change{ user_repository.all.count }.by(0)
+      end
+      it "does not increase the total number of registered accounts" do
+        expect{ subject }.to change{ account_repository.all.count }.by(0)
       end
     end
   end
