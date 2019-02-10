@@ -5,6 +5,9 @@ module AccountsInteractor
   class Register < HanamiSample::BaseInteractor
     include HanamiSample::Validatable
 
+    expose :user
+    expose :account
+
     Validation.class_eval do
       validations do
         required(:name) { filled? }
@@ -22,14 +25,12 @@ module AccountsInteractor
     end
 
     def call()
-      user = @user_repository.create(name: @params[:name], email: @params[:email])
-      account = @account_repository.create_with_password_encryption(
+      @user = @user_repository.create(name: @params[:name], email: @params[:email])
+      @account = @account_repository.create_with_password_encryption(
         screen_name: @params[:screen_name],
         password: @params[:password],
-        user_id: user.id
+        user_id: @user.id
       )
-
-      user
     end
   end
 end
