@@ -22,7 +22,14 @@ module AccountsInteractor
     end
 
     def call()
-      # your code goes here
+      user = @user_repository.create(name: @params[:name], email: @params[:email])
+      account = @account_repository.create_with_password_encryption(
+        screen_name: @params[:screen_name],
+        password: @params[:password],
+        user_id: user.id
+      )
+
+      user
     end
   end
 end
