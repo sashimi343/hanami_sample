@@ -4,19 +4,21 @@ module Api
       class Create
         include Api::Action
 
-        expose :user
-        expose :account
-        expose :errors
+        expose :user, :account
 
         def call(params)
-          result = AccountsInteractor::Register.new(params).call
+          interactor = AccountsInteractor::Register.new(params)
+          result = interactor.call
+
+          if interactor.validation_failed?
+            raise HanamiSample::Error::ValidationError.new(result.errors)
+          end
 
           if result.successful?
             @user = result.user
             @account = result.account
           else
-            self.status = 400
-            @errors = result.errors
+            raise HanamiSample::Error::UnprocessableEntityError.new("user", result.errors)
           end
         end
       end
