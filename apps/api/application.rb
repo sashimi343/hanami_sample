@@ -1,5 +1,6 @@
 require 'hanami/helpers'
 require 'hanami/assets'
+require_relative './controllers/global_error_handler.rb'
 
 module Api
   class Application < Hanami::Application
@@ -90,12 +91,12 @@ module Api
       # Default format for the requests that don't specify an HTTP_ACCEPT header
       # Argument: A symbol representation of a mime type, defaults to :html
       #
-      # default_request_format :html
+      default_request_format :json
 
       # Default format for responses that don't consider the request format
       # Argument: A symbol representation of a mime type, defaults to :html
       #
-      # default_response_format :html
+      default_response_format :json
 
       ##
       # TEMPLATES
@@ -248,6 +249,7 @@ module Api
       controller.prepare do
         # include MyAuthentication # included in all the actions
         # before :authenticate!    # run an authentication before callback
+        include Web::GlobalErrorHandler
       end
 
       # Configure the code that will yield each time Api::View is included
@@ -265,7 +267,7 @@ module Api
     #
     configure :development do
       # Don't handle exceptions, render the stack trace
-      handle_exceptions false
+      #handle_exceptions false
     end
 
     ##
@@ -273,7 +275,7 @@ module Api
     #
     configure :test do
       # Don't handle exceptions, render the stack trace
-      handle_exceptions false
+      #handle_exceptions false
     end
 
     ##

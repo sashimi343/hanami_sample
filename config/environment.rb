@@ -1,11 +1,14 @@
 require 'bundler/setup'
 require 'hanami/setup'
 require 'hanami/model'
+require 'hanami/middleware/body_parser'
 require_relative '../lib/hanami_sample'
 require_relative '../apps/api/application'
 
 Hanami.configure do
-  mount Api::Application, at: '/'
+  mount Api::Application, at: '/api'
+
+  middleware.use Hanami::Middleware::BodyParser, :json
 
   model do
     ##
@@ -39,8 +42,12 @@ Hanami.configure do
     logger level: :debug
   end
 
+  environment :test do
+    logger level: :error
+  end
+
   environment :production do
-    logger level: :info, formatter: :json, filter: []
+    logger level: :info, formatter: :json, filter: ["password"]
 
     mailer do
       delivery :smtp, address: ENV.fetch('SMTP_HOST'), port: ENV.fetch('SMTP_PORT')

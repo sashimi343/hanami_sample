@@ -8,6 +8,8 @@ gem 'sqlite3'
 
 gem 'tilt-jbuilder', github: 'vladfaust/hanami-jbuilder'
 
+gem 'bcrypt'
+
 group :development do
   # Code reloading
   # See: http://hanamirb.org/guides/projects/code-reloading
@@ -21,6 +23,7 @@ end
 
 group :test do
   gem 'rspec'
+  gem 'rspec-its'
   gem 'capybara'
 end
 
