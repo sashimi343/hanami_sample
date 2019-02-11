@@ -7,8 +7,16 @@ module HanamiSample::Validatable
 
   def valid?()
     validation_result = Validation.new(@params).validate
-    error(validation_result.messages) if validation_result.failure?
+
+    if validation_result.failure? and !@validation_failed
+      error(validation_result.messages)
+      @validation_failed = true
+    end
 
     validation_result.success?
+  end
+
+  def validation_failed?
+    @validation_failed
   end
 end

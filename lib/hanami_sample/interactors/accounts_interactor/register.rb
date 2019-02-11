@@ -9,10 +9,18 @@ module AccountsInteractor
     expose :account
 
     Validation.class_eval do
+      predicate :unused_email?, message: "is already used" do |current|
+        UserRepository.new.find_by_email(current).nil?
+      end
+
+      predicate :unused_screen_name?, message: "is already used" do |current|
+        AccountRepository.new.find_by_screen_name(current).nil?
+      end
+
       validations do
         required(:name) { filled? }
-        required(:email) { filled? }
-        required(:screen_name) { filled? }
+        required(:email) { filled? and unused_email? }
+        required(:screen_name) { filled? and unused_screen_name? }
         required(:password) { filled? }
       end
     end

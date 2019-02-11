@@ -7,4 +7,8 @@ class AccountRepository < Hanami::Repository
       user_id: account.user_id
     )
   end
+
+  def find_by_screen_name(screen_name)
+    accounts.where(screen_name: screen_name).first
+  end
 end

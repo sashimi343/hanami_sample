@@ -87,5 +87,26 @@ RSpec.describe AccountsInteractor::Register do
         expect{ subject }.to change{ account_repository.all.count }.by(0)
       end
     end
+
+    context "when email is already used" do
+      let(:params) { { name: "Alice", "email": "alice@example.com", screen_name: "alice", password: "TestP@ssw0rd" } }
+
+      it "should have errors" do
+        first_result = interactor.call
+        second_result = interactor.call
+
+        expect(second_result).to_not be_successful
+        expect(second_result.errors).to_not be_empty
+      end
+
+      it "does not increase the total number of registered users" do
+        first_result = interactor.call
+        expect{ interactor.call }.to change{ user_repository.all.count }.by(0)
+      end
+      it "does not increase the total number of registered accounts" do
+        first_result = interactor.call
+        expect{ interactor.call }.to change{ account_repository.all.count }.by(0)
+      end
+    end
   end
 end
