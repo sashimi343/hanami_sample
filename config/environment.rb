@@ -42,8 +42,12 @@ Hanami.configure do
     logger level: :debug
   end
 
+  environment :test do
+    logger level: :error
+  end
+
   environment :production do
-    logger level: :info, formatter: :json, filter: []
+    logger level: :info, formatter: :json, filter: ["password"]
 
     mailer do
       delivery :smtp, address: ENV.fetch('SMTP_HOST'), port: ENV.fetch('SMTP_PORT')
