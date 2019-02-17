@@ -1,14 +1,14 @@
-require_relative '../base_interactor.rb'
-require_relative '../validatable.rb'
+require 'hanami/validations'
+require_relative '../validatable_interactor.rb'
 
 module AccountsInteractor
-  class Register < HanamiSample::BaseInteractor
-    include HanamiSample::Validatable
-
+  class Register < HanamiSample::ValidatableInteractor
     expose :user
     expose :account
 
-    Validation.class_eval do
+    class Validation
+      include Hanami::Validations
+
       predicate :unused_email?, message: "is already used" do |current|
         UserRepository.new.find_by_email(current).nil?
       end
