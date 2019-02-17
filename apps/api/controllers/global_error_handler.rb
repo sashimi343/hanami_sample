@@ -5,6 +5,7 @@ module Web
       action.class_eval do
         handle_exception HanamiSample::Error::ValidationError => :handle_validation_error
         handle_exception HanamiSample::Error::UnprocessableEntityError => :handle_unprocessable_entity_error
+        handle_exception HanamiSample::Error::AuthenticationError => :handle_authentication_error
         handle_exception RuntimeError => :handle_runtime_error
       end
     end
@@ -19,6 +20,11 @@ module Web
     def handle_unprocessable_entity_error(error)
       write_debug_log(error)
       halt_with_error(422, error)
+    end
+
+    def handle_authentication_error(error)
+      write_debug_log(error)
+      halt_with_error(403, error)
     end
 
     def handle_runtime_error(error)
