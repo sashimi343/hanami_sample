@@ -14,5 +14,9 @@ class Account < Hanami::Entity
   def password()
     BCrypt::Password.new(password_digest)
   end
+
+  def authenticate(password_challenge)
+    password == password_challenge
+  end
 end
 
