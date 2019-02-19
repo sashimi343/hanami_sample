@@ -5,3 +5,4 @@
 # get '/hello', to: ->(env) { [200, {}, ['Hello from Hanami!']] }
 post '/users', to: 'users#create'
 post '/login', to: 'sessions#login'
+get '/profile', to: 'profile#index'
