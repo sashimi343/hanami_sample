@@ -2,6 +2,7 @@ require 'hanami/helpers'
 require 'hanami/assets'
 require_relative './controllers/global_error_handler.rb'
 require_relative './controllers/security_config.rb'
+require_relative './controllers/session_utils.rb'
 
 module Api
   class Application < Hanami::Application
@@ -252,6 +253,7 @@ module Api
         # before :authenticate!    # run an authentication before callback
         include Web::GlobalErrorHandler
         include Web::SecurityConfig
+        include Web::SessionUtils
       end
 
       # Configure the code that will yield each time Api::View is included

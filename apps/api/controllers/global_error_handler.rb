@@ -6,6 +6,8 @@ module Web
         handle_exception HanamiSample::Error::ValidationError => :handle_validation_error
         handle_exception HanamiSample::Error::UnprocessableEntityError => :handle_unprocessable_entity_error
         handle_exception HanamiSample::Error::AuthenticationError => :handle_authentication_error
+        handle_exception HanamiSample::Error::EntityNotFoundError => :handle_entity_not_found_error
+        handle_exception HanamiSample::Error::ParameterInvalidError => :handle_entity_not_found_error
         handle_exception RuntimeError => :handle_runtime_error
       end
     end
@@ -25,6 +27,11 @@ module Web
     def handle_authentication_error(error)
       write_debug_log(error)
       halt_with_error(403, error)
+    end
+
+    def handle_entity_not_found_error(error)
+      write_debug_log(error)
+      halt_with_error(404, error)
     end
 
     def handle_runtime_error(error)
