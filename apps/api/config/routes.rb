@@ -6,3 +6,4 @@
 post '/users', to: 'users#create'
 post '/login', to: 'sessions#login'
 get '/profile', to: 'profile#index'
+post '/tasks', to: 'tasks#create'
