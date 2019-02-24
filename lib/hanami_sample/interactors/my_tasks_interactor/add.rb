@@ -7,7 +7,7 @@ module MyTasksInteractor
       include Hanami::Validations
 
       validations do
-        required(:author_id) { filled? and int? }
+        required(:author) { filled? and type?(User) }
         required(:title) { filled? and str? and min_size?(1) }
         optional(:detail).maybe(:str?)
         optional(:deadline).maybe(:time?)
@@ -22,7 +22,7 @@ module MyTasksInteractor
     end
 
     def call()
-      author = @user_repository.find(@params[:author_id])
+      author = @params[:author]
       error!("user #{@params[:author_id]} does not exist") if author.nil?
       
       @params[:detail] ||= ""

@@ -25,7 +25,7 @@ RSpec.describe MyTasksInteractor::Add do
     subject { interactor.call }
 
     context "when parameters are valid" do
-      let(:params) { { author_id: author.id, title: "Run a test", detail: "bundle exec rake", deadline: tomorrow } }
+      let(:params) { { author: author, title: "Run a test", detail: "bundle exec rake", deadline: tomorrow } }
 
       it { is_expected.to be_successful }
       it "should have no errors" do
@@ -38,7 +38,7 @@ RSpec.describe MyTasksInteractor::Add do
         task = subject.task
 
         expect(task).to be_an_instance_of(Task)
-        expect(task.author_id).to eq(params[:author_id])
+        expect(task.author_id).to eq(params[:author].id)
         expect(task.title).to eq(params[:title])
         expect(task.detail).to eq(params[:detail])
         expect(task.deadline).to be_within(1).of(params[:deadline])
@@ -49,7 +49,7 @@ RSpec.describe MyTasksInteractor::Add do
     end
 
     context "when finished date is provided" do
-      let(:params) { { author_id: author.id, title: "Run a test", detail: "bundle exec rake", deadline: tomorrow, closed_at: yesterday } }
+      let(:params) { { author: author, title: "Run a test", detail: "bundle exec rake", deadline: tomorrow, closed_at: yesterday } }
 
       it { is_expected.to be_successful }
       it "should have no errors" do
@@ -73,7 +73,7 @@ RSpec.describe MyTasksInteractor::Add do
     end
 
     context "when author does not exist" do
-      let(:params) { { author_id: -1234, title: "Run a test", detail: "bundle exec rake", deadline: tomorrow } }
+      let(:params) { { author: nil, title: "Run a test", detail: "bundle exec rake", deadline: tomorrow } }
 
       it { is_expected.to_not be_successful }
       it "should have errors" do
@@ -88,7 +88,7 @@ RSpec.describe MyTasksInteractor::Add do
     end
 
     context "when title is missing" do
-      let(:params) { { author_id: author.id, detail: "bundle exec rake", deadline: tomorrow } }
+      let(:params) { { author: author, detail: "bundle exec rake", deadline: tomorrow } }
 
       it { is_expected.to_not be_successful }
       it "should have errors" do
@@ -103,7 +103,7 @@ RSpec.describe MyTasksInteractor::Add do
     end
 
     context "when detail is not provided" do
-      let(:params) { { author_id: author.id, title: "Run a test", deadline: tomorrow } }
+      let(:params) { { author: author, title: "Run a test", deadline: tomorrow } }
 
       it { is_expected.to be_successful }
       it "should have no errors" do
@@ -127,7 +127,7 @@ RSpec.describe MyTasksInteractor::Add do
     end
 
     context "when deadline is not provided" do
-      let(:params) { { author_id: author.id, title: "Run a test", detail: "bundle exec rake" } }
+      let(:params) { { author: author, title: "Run a test", detail: "bundle exec rake" } }
 
       it { is_expected.to be_successful }
       it "should have no errors" do
